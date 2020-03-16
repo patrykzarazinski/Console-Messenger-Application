@@ -34,7 +34,6 @@ void client::sending()
     do
     {
         buff.clear();
-        cout << "> ";
         getline(cin, buff);
         if(send(mySocket, buff.c_str() , buff.size() + 1, 0) == -1)
         {
@@ -55,7 +54,7 @@ void client::receive()
         memset(p, '\0', p_size);
         if(recv(mySocket, p, p_size - 1, MSG_DONTWAIT  ) > 0)
         {
-            printf("> %s\n", p);
+            printf("%s\n", p);
         }
     }
 }
