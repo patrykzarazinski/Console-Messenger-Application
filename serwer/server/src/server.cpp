@@ -1,4 +1,4 @@
-#include "serwer.h"
+#include "server.h"
 
 serwer::serwer(int serwer_port)
 {
