@@ -1,5 +1,5 @@
 #include <iostream>
-#include"serwer.h"
+#include"server.h"
 #include <unistd.h>
 #include<cstring>
 #include<thread>
