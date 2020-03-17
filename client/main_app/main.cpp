@@ -20,10 +20,10 @@ int main(int argc, char *argv[])
     cout << "To disconnect write >> end << !" << endl;
 
     thread t1(&client::sending, &clientObject);
-    thread t2(&client::receive, &clientObject);
+    thread * t2 = new thread(&client::receive, &clientObject);
 
     t1.join();
-    t2.join();
+    //t2.join();
 
     close(clientObject.get_mySocket());
 

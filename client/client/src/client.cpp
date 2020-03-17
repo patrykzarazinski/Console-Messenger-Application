@@ -52,7 +52,7 @@ void client::receive()
     while(flag)
     {
         memset(p, '\0', p_size);
-        if(recv(mySocket, p, p_size - 1, MSG_DONTWAIT  ) > 0)
+        if(recv(mySocket, p, p_size - 1, 0) > 0) //MSG_DONTWAIT
         {
             printf("%s\n", p);
         }
