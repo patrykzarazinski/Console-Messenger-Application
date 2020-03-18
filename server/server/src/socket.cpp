@@ -16,7 +16,7 @@ Socket::Socket(char * ip, int port)
 Socket::~Socket()
 {
 	//close(mySocket);
-    std::cout << "Socket has been closed!" << std::endl;
+    //std::cout << "Socket has been closed!" << std::endl;
 }
 
 void Socket::s_bind()
