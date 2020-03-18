@@ -2,15 +2,15 @@
 
 #include <netinet/in.h> //sockaddr_in()
 #include <arpa/inet.h> // inet_pton()
-#include<cstring> // memset()
-#include<iostream>
+#include <cstring> // memset()
+#include <iostream>
 #include <sys/types.h> //socket(), bind()
 #include <sys/socket.h> //socket(), bind()
-#include<cstdio> //perror()
-#include<cerrno> //errno
-#include<string>
-#include<vector>
-#include<algorithm>
+#include <cstdio> //perror()
+#include <cerrno> //errno
+#include <string>
+#include <vector>
+#include <algorithm>
 #include <unistd.h>
 
 class Socket
@@ -27,7 +27,7 @@ class Socket
 
     public:
 
-    Socket(int serwer_port = 5000);
+    Socket(char * ip, int port);
     ~Socket();
 
     int s_accept();

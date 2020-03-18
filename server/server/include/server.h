@@ -1,19 +1,19 @@
 #pragma once
 
+#include "socket.h"
 #include <netinet/in.h> //sockaddr_in()
 #include <arpa/inet.h> // inet_pton()
-#include<cstring> // memset()
-#include<iostream>
+#include <cstring> // memset()
+#include <iostream>
 #include <sys/types.h> //socket(), bind()
 #include <sys/socket.h> //socket(), bind()
-#include<cstdio> //perror()
-#include<cerrno> //errno
-#include<string>
-#include<vector>
-#include<algorithm>
+#include <cstdio> //perror()
+#include <cerrno> //errno
+#include <string>
+#include <vector>
+#include <algorithm>
 #include <unistd.h>
-#include"socket.h"
-#include<thread>
+#include <thread>
 
 class serwer
 {
@@ -29,7 +29,7 @@ class serwer
 
     public:
 
-    serwer(int serwer_port);
+    serwer(char * serwer_ip, int serwer_port);
     ~serwer();
 
     void run();

@@ -4,7 +4,7 @@ using std::cout;
 using std::endl;
 using std::cin;
 
-client::client(int serwer_port)
+client::client(char * client_ip, int client_port):test(client_ip, client_port)
 {
     t2 = nullptr;
     test.s_connect();

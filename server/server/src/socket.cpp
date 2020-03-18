@@ -1,22 +1,21 @@
 #include "socket.h"
 
-Socket::Socket(int serwer_port)
+Socket::Socket(char * ip, int port)
 { 
 	mySocket = s_socket();
 
     //ustawienie parametrow gniazda(socket)
     serwerAddrress.sin_family = AF_INET;
-    serwerAddrress.sin_addr.s_addr = htonl(INADDR_ANY); //INADDR_ANY - automatycznie wybiera ip
-    serwerAddrress.sin_port = htons(static_cast<uint16_t>(serwer_port)); // host to network byte order
+    inet_pton(AF_INET, ip, &(serwerAddrress.sin_addr));//INADDR_ANY - automatycznie wybiera ip 
+    serwerAddrress.sin_port = htons(static_cast<uint16_t>(port)); // host to network byte order
     memset(&(serwerAddrress.sin_zero), '\0', 8);
 
     sin_size = sizeof(struct sockaddr_in);
-
-    std::cout << "The socket has been created!" << std::endl;
 }
 
 Socket::~Socket()
 {
+	//close(mySocket);
     std::cout << "Socket has been closed!" << std::endl;
 }
 

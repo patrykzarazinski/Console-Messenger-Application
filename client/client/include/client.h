@@ -1,20 +1,20 @@
 #pragma once
 
+#include "socket.h"
 #include <netinet/in.h> //sockaddr_in()
 #include <arpa/inet.h> // inet_pton()
-#include<cstring> // memset()
-#include<iostream>
+#include <cstring> // memset()
+#include <iostream>
 #include <sys/types.h> //socket(), bind()
 #include <sys/socket.h> //socket(), bind()
-#include<cstdio> //perror()
-#include<cerrno> //errno
-#include<cstdio>
-#include<cstring>
+#include <cstdio> //perror()
+#include <cerrno> //errno
+#include <cstdio>
+#include <cstring>
 #include <unistd.h>
-#include<string>
+#include <string>
 #include <pthread.h>
-#include"socket.h"
-#include<thread>
+#include <thread>
 
 class client
 {
@@ -32,7 +32,7 @@ class client
 
     public:
 
-    client(int serwer_port);
+    client(char * client_ip, int client_port);
     ~client();
 
     void run();

@@ -1,6 +1,6 @@
 #include "server.h"
 
-serwer::serwer(int serwer_port)
+serwer::serwer(char * serwer_ip, int serwer_port):test(serwer_ip, serwer_port)
 {
     t1 = nullptr;
 

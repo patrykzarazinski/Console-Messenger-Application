@@ -1,9 +1,14 @@
-#include"client.h"
+#include "client.h"
 #include <iostream>
 
 int main(int argc, char *argv[])
 {
-    client clientObject(5000);
+    if(argc != 3)
+    {
+        std::cout << "Enter IP and port address! e.g. 127.0.0.1 5000" << std::endl;
+        exit(1);
+    }
+    client clientObject(argv[1], atoi(argv[2]));
 
     clientObject.run();
 
