@@ -1,7 +1,6 @@
 #include <iostream>
 #include"client.h"
 #include<thread>
-#include"socket.h"
 
 using std::cout;
 using std::endl;

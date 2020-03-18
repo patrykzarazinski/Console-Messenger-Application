@@ -4,4 +4,3 @@ project(client_app)
 
 add_subdirectory(main_app)
 add_subdirectory(client)
-target_include_directories(client PUBLIC socket)
