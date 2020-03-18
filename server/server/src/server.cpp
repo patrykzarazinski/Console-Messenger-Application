@@ -2,26 +2,13 @@
 
 serwer::serwer(int serwer_port)
 {
-    //deskryptor gniazda zwrocny przez, int socket(int domain, int type, int protocol);
-    if((mySocket = socket(PF_INET, SOCK_STREAM, 0)) == -1)
-    {
-        perror("Error function socket");
-        exit(1);
-    }
+    t1 = nullptr;
 
-    if (setsockopt(mySocket, SOL_SOCKET, SO_REUSEADDR, &yes,sizeof(int)) == -1) //fukcja nadpisuje jeszcze nie zwolniony wczesniej uzywany port
-    {
-        perror("Error function setsockopt");
-        exit(2);
-    }
+    test.s_setsockopt();
+    test.s_bind();
+    test.s_listen();
 
-    //ustawienie parametrow gniazda(socket)
-    serwerAddrress.sin_family = AF_INET;
-    serwerAddrress.sin_addr.s_addr = htonl(INADDR_ANY); //INADDR_ANY - automatycznie wybiera ip
-    serwerAddrress.sin_port = htons(static_cast<uint16_t>(serwer_port)); // host to network byte order
-    memset(&(serwerAddrress.sin_zero), '\0', 8);
-
-    sin_size = sizeof(struct sockaddr_in);
+    arraySocket.push_back(test.get_mySocket());
 
     std::cout << "The server has been opened!" << std::endl;
 }
@@ -29,11 +16,6 @@ serwer::serwer(int serwer_port)
 serwer::~serwer()
 {
     std::cout << "Server has closed!" << std::endl;
-}
-
-struct sockaddr_in * serwer::get_serwerAddrress()
-{
-    return &serwerAddrress;
 }
 
 int serwer::receive()
@@ -60,13 +42,29 @@ int serwer::receive()
 
     return 1;
 }
+
 void serwer::broadcast(int activeSocket, std::string text)
 {
     for(auto it = arraySocket.begin(); it != arraySocket.end(); it++)
     {;
-        if(*it != activeSocket && *it != mySocket)
+        if(*it != activeSocket && *it != test.get_mySocket())
         {
             send(*it, text.c_str() , text.size() + 1, 0);
         }
+    }
+}
+
+void serwer::run()
+{
+  while(true)
+    {
+        std::cout << "Waiting for call..." << std::endl;
+
+        arraySocket.push_back(test.s_accept()); // dodaje nowe gniazdo(socket) do vectora
+
+        std::cout <<"User connected to server!" <<  std::endl;
+        std::cout << "Got connection from: " << inet_ntoa(test.get_clientAddress().sin_addr) << std::endl;
+
+        t1 =  new std::thread(&serwer::receive, this);
     }
 }

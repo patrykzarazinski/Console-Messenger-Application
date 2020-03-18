@@ -6,21 +6,10 @@ using std::cin;
 
 client::client(int serwer_port)
 {
-    //deskryptor gniazda zwrocny przez, int socket(int domain, int type, int protocol);
-    if((mySocket = socket(PF_INET, SOCK_STREAM, 0)) == -1)
-    {
-        perror("Error function socket");
-        exit(1);
-    }
-
-    //ustawienie parametrow gniazda(socket)
-    destinationAddress.sin_family = AF_INET;
-    destinationAddress.sin_addr.s_addr = htonl(INADDR_ANY); //INADDR_ANY - automatycznie wybiera ip, zamiast inet_pton(AF_INET, ip, &(serwerAddrres.sin_addr));
-    destinationAddress.sin_port = htons(static_cast<uint16_t>(serwer_port)); // host to network byte order
-    memset(&(destinationAddress.sin_zero), '\0', 8);
+    t2 = nullptr;
+    test.s_connect();
 
     flag = true;
-
 }
 
 client::~client()
@@ -35,7 +24,7 @@ void client::sending()
     {
         buff.clear();
         getline(cin, buff);
-        if(send(mySocket, buff.c_str() , buff.size() + 1, 0) == -1)
+        if(send(test.get_mySocket(), buff.c_str() , buff.size() + 1, 0) == -1)
         {
             perror("Error function recv");
             exit(7);
@@ -52,9 +41,20 @@ void client::receive()
     while(flag)
     {
         memset(p, '\0', p_size);
-        if(recv(mySocket, p, p_size - 1, 0) > 0) //MSG_DONTWAIT
+        if(recv(test.get_mySocket(), p, p_size - 1, 0) > 0) //MSG_DONTWAIT
         {
             printf("%s\n", p);
         }
     }
+}
+
+void client::run()
+{
+    cout << "You are now connected!" << endl;
+    cout << "To disconnect write >> end << !" << endl;
+
+    t1 = std::thread(&client::sending, this);
+    t2 = new std::thread(&client::receive, this);
+
+    t1.join();
 }

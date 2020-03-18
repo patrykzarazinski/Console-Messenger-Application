@@ -13,24 +13,28 @@
 #include <unistd.h>
 #include<string>
 #include <pthread.h>
+#include"socket.h"
+#include<thread>
 
 class client
 {
     private:
 
-    int mySocket; //deskryptor gniazda
+    Socket test;
     struct sockaddr_in destinationAddress; //parametry gniazda
     bool flag;
     enum{p_size = 512};
+    std::thread t1;
+    std::thread * t2;
+
+    void sending();
+    void receive();
 
     public:
 
     client(int serwer_port);
     ~client();
 
-    int & get_mySocket(){ return mySocket; }
-    struct sockaddr_in * get_destinationAddress(){ return &destinationAddress; }
-    void sending();
-    void receive();
+    void run();
 
 };

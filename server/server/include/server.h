@@ -12,37 +12,25 @@
 #include<vector>
 #include<algorithm>
 #include <unistd.h>
+#include"socket.h"
+#include<thread>
 
 class serwer
 {
     private:
 
-    int mySocket, newSocket; //deskryptor gniazda
-    struct sockaddr_in serwerAddrress, clientAddress; //zasoby gniazda serwera i zasoby gniazda klienta przychodzacego
-    enum{BACKLOG = 10, p_size = 512}; 
-    int yes = 1; // zmienna wykorzystna w funkcji setsockopt
-    int sin_size; // rozmiar struktury sockaddr_in
-    std::string buff;
+    Socket test;
+    enum{p_size = 512}; 
     std::vector<int> arraySocket;
+    std::thread * t1;
+
+    int receive();
+    void broadcast(int activeSocket, std::string text);
 
     public:
 
     serwer(int serwer_port);
     ~serwer();
 
-    int & get_mySocket(){ return mySocket; }
-    int & get_newSocket(){ return newSocket; }
-    struct sockaddr_in * get_serwerAddrress();
-    struct sockaddr_in * get_clientAddress(){ return &clientAddress; }
-    int get_BACKLOG(){ return BACKLOG; }
-    int * get_sin_size(){ return &sin_size; }
-    int size_buff(){ return buff.size(); }
-    const char * get_buff(){ return buff.c_str(); }
-    void reset_buff(){ buff.clear(); }
-    std::vector<int> & get_arraySocket(){ return arraySocket; }
-    int receive();
-    void broadcast(int activeSocket, std::string text);
+    void run();
 };
-
-
-
