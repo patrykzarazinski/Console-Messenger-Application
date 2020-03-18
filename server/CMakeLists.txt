@@ -4,4 +4,4 @@ project(server_app)
 
 add_subdirectory(main_app)
 add_subdirectory(server)
-target_link_libraries(server socket)
+target_include_directories(server PUBLIC socket)
