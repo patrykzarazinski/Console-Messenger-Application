@@ -28,7 +28,6 @@ class Socket
     public:
 
     Socket(char * ip, int port);
-    ~Socket();
 
     int s_accept();
     void s_setsockopt();

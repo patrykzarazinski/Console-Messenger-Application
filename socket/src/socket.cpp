@@ -6,17 +6,11 @@ Socket::Socket(char * ip, int port)
 
     //ustawienie parametrow gniazda(socket)
     serwerAddrress.sin_family = AF_INET;
-    inet_pton(AF_INET, ip, &(serwerAddrress.sin_addr));//INADDR_ANY - automatycznie wybiera ip
+    inet_pton(AF_INET, ip, &(serwerAddrress.sin_addr));//INADDR_ANY - automatycznie wybiera ip 
     serwerAddrress.sin_port = htons(static_cast<uint16_t>(port)); // host to network byte order
     memset(&(serwerAddrress.sin_zero), '\0', 8);
 
     sin_size = sizeof(struct sockaddr_in);
-}
-
-Socket::~Socket()
-{
-	//close(mySocket);
-    //std::cout << "Socket has been closed!" << std::endl;
 }
 
 void Socket::s_bind()
