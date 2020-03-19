@@ -75,10 +75,3 @@ TEST(SocketInitialization_negative, negative_4) // same IP, different port
     EXPECT_EQ(ntohs(test.get_serwerAddress().sin_port), n); // ntohs(), because port is in network byte order
     EXPECT_STREQ(inet_ntoa(test.get_serwerAddress().sin_addr), s.c_str()); // inet_ntoa(), same as above network to ascii
 }
-
-int main(int argc, char **argv) 
-{
-    testing::InitGoogleTest(&argc, argv);
-
-    return RUN_ALL_TESTS();
-}
