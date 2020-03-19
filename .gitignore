@@ -11,3 +11,4 @@ CTestTestfile.cmake
 _deps
 /client/build
 /server/build
+/tests/build
