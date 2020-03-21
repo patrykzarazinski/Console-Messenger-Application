@@ -1,5 +1,8 @@
 #include "server.h"
 
+using std::cout;
+using std::endl;
+
 serwer::serwer(char * serwer_ip, int serwer_port):test(serwer_ip, serwer_port)
 {
     t1 = nullptr;
@@ -10,35 +13,36 @@ serwer::serwer(char * serwer_ip, int serwer_port):test(serwer_ip, serwer_port)
 
     arraySocket.push_back(test.get_mySocket());
 
-    std::cout << "The server has been opened!" << std::endl;
+    cout << "The server has been opened!" << endl;
 }
 
 serwer::~serwer()
 {
-    std::cout << "Server has closed!" << std::endl;
+    cout << "Server has closed!" << endl;
 }
 
 int serwer::receive()
 {
     int tempSocket = arraySocket.back();
     int counter = 1;
-    char p[p_size];
+    std::string buff;
 
-       do
-       {
-           memset(p, '\0', p_size);
+      do
+      {
 
-           if((counter = recv(tempSocket, p, p_size - 1, 0)) > 0)
-           {
-               broadcast(tempSocket, p);
-           }
+        buff.clear();
 
-       }while(counter != 0);
+        if((counter = recv(tempSocket, const_cast<char *>(buff.c_str()), buff.max_size(), 0)) > 0)
+        {
+          broadcast(tempSocket, buff.c_str());
+        }
 
-       arraySocket.erase(std::remove(arraySocket.begin(), arraySocket.end(), tempSocket), arraySocket.end());
-       close(tempSocket);
-       std::cout << "User disconnect!" << std::endl;
-       std::cout << "Waiting for call..." << std::endl;
+      }while(counter != 0);
+
+      arraySocket.erase(std::remove(arraySocket.begin(), arraySocket.end(), tempSocket), arraySocket.end());
+      close(tempSocket);
+      cout << "User disconnect!" << endl;
+      cout << "Waiting for call..." << endl;
 
     return 1;
 }
@@ -58,12 +62,12 @@ void serwer::run()
 {
   while(true)
     {
-        std::cout << "Waiting for call..." << std::endl;
+        cout << "Waiting for call..." << endl;
 
         arraySocket.push_back(test.s_accept()); // dodaje nowe gniazdo(socket) do vectora
 
-        std::cout <<"User connected to server!" <<  std::endl;
-        std::cout << "Got connection from: " << inet_ntoa(test.get_clientAddress().sin_addr) << std::endl;
+        cout <<"User connected to server!" <<  endl;
+        cout << "Got connection from: " << inet_ntoa(test.get_clientAddress().sin_addr) << endl;
 
         t1 =  new std::thread(&serwer::receive, this);
     }

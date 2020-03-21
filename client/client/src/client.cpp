@@ -3,6 +3,7 @@
 using std::cout;
 using std::endl;
 using std::cin;
+using std::cerr;
 
 client::client(char * client_ip, int client_port):test(client_ip, client_port)
 {
@@ -26,7 +27,7 @@ void client::sending()
         getline(cin, buff);
         if(send(test.get_mySocket(), buff.c_str() , buff.size() + 1, 0) == -1)
         {
-            perror("Error function recv");
+            cerr << "Error with function recv" << endl;
             exit(7);
         }
     }while(buff != "end");
@@ -36,14 +37,14 @@ void client::sending()
 
 void client::receive()
 {
-    char p[p_size];
+    std::string buff;
 
     while(flag)
     {
-        memset(p, '\0', p_size);
-        if(recv(test.get_mySocket(), p, p_size - 1, 0) > 0) //MSG_DONTWAIT
+        buff.clear();
+        if(recv(test.get_mySocket(), const_cast<char *>(buff.c_str()), buff.max_size(), 0) > 0) //MSG_DONTWAIT
         {
-            printf("%s\n", p);
+            cout << buff.c_str() << endl;
         }
     }
 }

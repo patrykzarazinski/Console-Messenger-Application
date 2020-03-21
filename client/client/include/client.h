@@ -23,7 +23,6 @@ class client
     Socket test;
     struct sockaddr_in destinationAddress; //parametry gniazda
     bool flag;
-    enum{p_size = 512};
     std::thread t1;
     std::thread * t2;
 

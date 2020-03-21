@@ -20,7 +20,6 @@ class serwer
     private:
 
     Socket test;
-    enum{p_size = 512}; 
     std::vector<int> arraySocket;
     std::thread * t1;
 

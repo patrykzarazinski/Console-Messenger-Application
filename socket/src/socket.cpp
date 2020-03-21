@@ -1,5 +1,8 @@
 #include "socket.h"
 
+using std::cerr;
+using std::endl;
+
 Socket::Socket(char * ip, int port)
 { 
 	mySocket = s_socket();
@@ -17,8 +20,8 @@ void Socket::s_bind()
 {
 	if(bind(mySocket,reinterpret_cast<struct sockaddr*>(&serwerAddrress) , sizeof(struct sockaddr)) == -1)
     {
+        cerr << "Error with function bind" << endl;
         exit(3);
-        perror("Error function bind");
     }
 }
 
@@ -26,7 +29,7 @@ void Socket::s_listen()
 {
 	if(listen(mySocket, BACKLOG) == -1)
     {
-        perror("Error function listen");
+        cerr << "Error with function listen" << endl;
         exit(5);
     }
 }
@@ -35,7 +38,7 @@ void Socket::s_setsockopt()
 {
 	if (setsockopt(mySocket, SOL_SOCKET, SO_REUSEADDR, &yes,sizeof(int)) == -1) //fukcja nadpisuje jeszcze nie zwolniony wczesniej uzywany port
     {
-        perror("Error function setsockopt");
+        cerr << "Error with function setsockopt" << endl;
         exit(2);
     }
 }
@@ -54,7 +57,7 @@ void Socket::s_connect()
 {
 	if(connect(mySocket, reinterpret_cast<struct sockaddr*>(&serwerAddrress) , sizeof(struct sockaddr)) == -1)
     {
-        perror("Error function connect");
+        cerr << "Error with function connect" << endl;
         exit(2);
     }
 }
