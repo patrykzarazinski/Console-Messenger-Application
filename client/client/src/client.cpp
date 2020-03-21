@@ -37,12 +37,12 @@ void client::sending()
 
 void client::receive()
 {
-    std::string buff;
+    std::string buff(515, '\0');
 
     while(flag)
     {
         buff.clear();
-        if(recv(test.get_mySocket(), const_cast<char *>(buff.c_str()), buff.max_size(), 0) > 0) //MSG_DONTWAIT
+        if(recv(test.get_mySocket(), const_cast<char *>(buff.c_str()), buff.size() - 1, 0) > 0) //MSG_DONTWAIT
         {
             cout << buff.c_str() << endl;
         }

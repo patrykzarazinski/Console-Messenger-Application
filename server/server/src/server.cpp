@@ -25,14 +25,14 @@ int serwer::receive()
 {
     int tempSocket = arraySocket.back();
     int counter = 1;
-    std::string buff;
+    std::string buff(512,'\0');
 
       do
       {
 
         buff.clear();
 
-        if((counter = recv(tempSocket, const_cast<char *>(buff.c_str()), buff.max_size(), 0)) > 0)
+        if((counter = recv(tempSocket, const_cast<char *>(buff.c_str()), buff.size() - 1, 0)) > 0)
         {
           broadcast(tempSocket, buff.c_str());
         }
