@@ -36,8 +36,8 @@ class Socket
     Socket(char * ip, int port, int mode); // mode: 1 tworzy obiekt, ktory jest serwerem; 2 tworzy obiekt, ktory jest clientem
 
     friend ostream & operator<<(ostream & os, const Socket & s); // wypisuje adres clienta
-    int receive(std::string & s, int s_socket); // odbiera string z konrektengo gniazda. i go zwraca; 1 w przypadku powodzenia, -1 w przypadku niepowodzenia
-    int receive(std::string & s); // ...z gniazda serwera
-    int operator>>(std::string & s); // wczytuje i wysyla string; 1 w przypadku powodzenia, -1 w przypadku niepowodzenia
+    int receive(std::string & s, int s_socket); // odbiera dane z dowolnego gniazda
+    int receive(std::string & s); // odbiera danes
+    int operator>>(std::string & s); // wysyla dane
     int s_accept(); 
  };
