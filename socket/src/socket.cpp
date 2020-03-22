@@ -2,8 +2,9 @@
 
 using std::cerr;
 using std::endl;
+using std::cout;
 
-Socket::Socket(char * ip, int port)
+Socket::Socket(char * ip, int port, int mode)
 { 
 	mySocket = s_socket();
 
@@ -14,6 +15,21 @@ Socket::Socket(char * ip, int port)
     memset(&(serwerAddrress.sin_zero), '\0', 8);
 
     sin_size = sizeof(struct sockaddr_in);
+
+    switch(mode)
+    {
+    	case 1:
+	    	s_setsockopt();
+	    	s_bind();
+	    	s_listen();
+    		break;
+    	case 2:
+    		s_connect();
+    		break;
+    	default:
+    		cout << "You have chosen the wrong mode!" << endl;
+    		exit(11);
+    }
 }
 
 void Socket::s_bind()
@@ -60,4 +76,38 @@ void Socket::s_connect()
         cerr << "Error with function connect" << endl;
         exit(2);
     }
+}
+
+ostream & operator<<(ostream & os, const Socket & s)
+{
+	os << inet_ntoa(s.clientAddress.sin_addr);
+	return os;
+}
+
+int Socket::receive(std::string & s, int s_socket)
+{
+	s = std::string(512, '\0');
+	if(recv(s_socket, const_cast<char *>(s.c_str()), s.size() - 1, 0) > 0)
+		return 1;
+    
+    return -1;
+}
+
+int Socket::receive(std::string & s)
+{
+	s = std::string(512, '\0');
+	if(recv(mySocket, const_cast<char *>(s.c_str()), s.size() - 1, 0) > 0)
+        return 1;
+    
+    return -1;
+}
+
+int Socket::operator>>(std::string & s)
+{
+	if(send(mySocket, s.c_str() , s.size() + 1, 0) == -1)
+    {
+        cerr << "Error with function recv" << endl;
+        return -1;
+    }
+	return 1;
 }

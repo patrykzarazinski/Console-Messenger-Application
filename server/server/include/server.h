@@ -21,7 +21,7 @@ class serwer
 
     Socket test;
     std::vector<int> arraySocket;
-    std::thread * t1;
+    std::thread t1;
 
     int receive();
     void broadcast(int activeSocket, std::string text);
@@ -29,7 +29,6 @@ class serwer
     public:
 
     serwer(char * serwer_ip, int serwer_port);
-    ~serwer();
 
     void run();
 };

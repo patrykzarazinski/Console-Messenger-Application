@@ -3,7 +3,7 @@
 #include "socket.h"
 #include <netinet/in.h> //sockaddr_in()
 #include <arpa/inet.h> // inet_pton()
-#include <cstring> // memset()
+#include <cstring> 
 #include <iostream>
 #include <sys/types.h> //socket(), bind()
 #include <sys/socket.h> //socket(), bind()
@@ -21,10 +21,9 @@ class client
     private:
 
     Socket test;
-    struct sockaddr_in destinationAddress; //parametry gniazda
     bool flag;
     std::thread t1;
-    std::thread * t2;
+    std::thread t2;
 
     void sending();
     void receive();
