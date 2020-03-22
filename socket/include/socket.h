@@ -7,11 +7,9 @@
 #include <sys/types.h> //socket(), bind()
 #include <sys/socket.h> //socket(), bind()
 #include <cstdio> //perror()
-#include <cerrno> //errno
 #include <string>
 #include <vector>
 #include <algorithm>
-#include <unistd.h>
 
 using std::ostream;
 

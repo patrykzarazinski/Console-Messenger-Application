@@ -46,6 +46,8 @@ void client::run()
     cout << "You are now connected!" << endl;
     cout << "To disconnect write >> end << !" << endl;
 
+    signal(SIGINT, SIG_IGN); // wylacza mozliwosc uzycia ctrl + c
+
     t1 = std::thread(&client::sending, this);
     t2 = std::thread(&client::receive, this);
 

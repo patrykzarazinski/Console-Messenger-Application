@@ -15,6 +15,7 @@
 #include <string>
 #include <pthread.h>
 #include <thread>
+#include <csignal>
 
 class client
 {
