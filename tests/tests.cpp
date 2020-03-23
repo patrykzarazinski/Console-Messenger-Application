@@ -1,77 +1,64 @@
 #include "socket.h"
+#include <iostream>
 #include <gtest/gtest.h>
-#include<string>
+#include <string>
+
+Socket serwer(const_cast<char *>("127.0.0.1"), 5000, 1);
+
+class socketTest : public testing::Test
+{
+	public:
+
+	Socket client;
+
+	socketTest():client(const_cast<char *>("127.0.0.1"), 5000, 2){}
+	void SetUp()
+	{	
+		std::cout << "Before test" << std::endl;
+		client >> "Some data";
+	}
+	void TearDown()
+	{
+		std::cout << "After test" << std::endl;
+	}
+	~socketTest(){}
+};
 
 
-//Positive tests
-
-
-TEST(SocketInitialization_positive, positive_1) 
+TEST_F(socketTest, dataReceive_1) 
 { 
-    Socket test(const_cast<char *>("127.0.0.1"), 5000);
-
-    int n = 5000;
-    std::string s = "127.0.0.1";
-
-    EXPECT_EQ(ntohs(test.get_serwerAddress().sin_port), n); // ntohs(), because port is in network byte order
-    EXPECT_STREQ(inet_ntoa(test.get_serwerAddress().sin_addr), s.c_str()); // inet_ntoa(), same as above network to ascii
+	std::string s;
+	ASSERT_EQ(1, serwer.receive(s, serwer.s_accept()));
 }
 
-TEST(SocketInitialization_positive, positive_2) 
+TEST_F(socketTest, dataReceive_2) 
 { 
-    Socket test(const_cast<char *>("127.55.55.55"), 5555);
-
-    int n = 5555;
-    std::string s = "127.55.55.55";
-
-    EXPECT_EQ(ntohs(test.get_serwerAddress().sin_port), n); // ntohs(), because port is in network byte order
-    EXPECT_STREQ(inet_ntoa(test.get_serwerAddress().sin_addr), s.c_str()); // inet_ntoa(), same as above network to ascii
+	std::string s;
+	ASSERT_EQ(1, serwer.receive(s, serwer.s_accept()));
 }
 
-
-//Negative tests
-
-
-TEST(SocketInitialization_negative, negative_1) // different port and IP
+TEST_F(socketTest, dataReceive_3) 
 { 
-    Socket test(const_cast<char *>("127.0.0.1"), 5000);
+	std::string s;
+	int user = serwer.s_accept();
 
-    int n = 4000 ;
-    std::string s = "127.100.100.100";
-
-    EXPECT_EQ(ntohs(test.get_serwerAddress().sin_port), n); // ntohs(), because port is in network byte order
-    EXPECT_STREQ(inet_ntoa(test.get_serwerAddress().sin_addr), s.c_str()); // inet_ntoa(), same as above network to ascii
+	ASSERT_EQ(1, serwer.receive(s, user));
+	std:: cout << s << std::endl;
+	send(user, s.c_str(), s.size() + 1, 0);
+	ASSERT_EQ(1, client.receive(s));
+	std:: cout << s << std::endl;
 }
 
-TEST(SocketInitialization_negative, negative_2) // different port and IP
+TEST_F(socketTest, dataReceive_4) 
 { 
-    Socket test(const_cast<char *>("127.0.0.1"), 5000);
+	std::string s;
+	std::string to_Client = "test";
+	int user = serwer.s_accept();
 
-    int n = 1000 ;
-    std::string s = "120.0.0.1";
-
-    EXPECT_EQ(ntohs(test.get_serwerAddress().sin_port), n); // ntohs(), because port is in network byte order
-    EXPECT_STREQ(inet_ntoa(test.get_serwerAddress().sin_addr), s.c_str()); // inet_ntoa(), same as above network to ascii
-}
-
-TEST(SocketInitialization_negative, negative_3) // same port, different IP
-{ 
-    Socket test(const_cast<char *>("127.0.0.1"), 5000);
-
-    int n = 5000 ;
-    std::string s = "120.0.0.1";
-
-    EXPECT_EQ(ntohs(test.get_serwerAddress().sin_port), n); // ntohs(), because port is in network byte order
-    EXPECT_STREQ(inet_ntoa(test.get_serwerAddress().sin_addr), s.c_str()); // inet_ntoa(), same as above network to ascii
-}
-
-TEST(SocketInitialization_negative, negative_4) // same IP, different port
-{ 
-    Socket test(const_cast<char *>("127.0.0.1"), 5000);
-
-    int n = 1000 ;
-    std::string s = "127.0.0.1";
-
-    EXPECT_EQ(ntohs(test.get_serwerAddress().sin_port), n); // ntohs(), because port is in network byte order
-    EXPECT_STREQ(inet_ntoa(test.get_serwerAddress().sin_addr), s.c_str()); // inet_ntoa(), same as above network to ascii
+	ASSERT_EQ(1, serwer.receive(s, user));
+	std:: cout << s << std::endl;
+	send(user, s.c_str(), s.size() + 1, 0);
+	std::cout << to_Client << std::endl;
+	ASSERT_EQ(1, client.receive(to_Client));
+	std:: cout << to_Client << std::endl;
 }
