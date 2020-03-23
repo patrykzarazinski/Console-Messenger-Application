@@ -16,6 +16,7 @@
 #include <pthread.h>
 #include <thread>
 #include <csignal>
+#include <fstream>
 
 class client
 {
@@ -28,6 +29,7 @@ class client
 
     void sending();
     void receive();
+    bool fileReading(std::string & s);
 
     public:
 

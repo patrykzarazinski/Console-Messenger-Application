@@ -23,6 +23,16 @@ void client::sending()
     {
         buff.clear();
         getline(cin, buff);
+        if(buff == "file")
+        {
+            test >> "file";
+            if(!fileReading(buff))
+                continue;
+            test >> buff;
+            cout << "You have send the file!" << endl;
+            buff.clear();
+            continue;
+        }
         test >> buff;
     }while(buff != "end");
 
@@ -47,7 +57,7 @@ void client::receive()
 void client::run()
 {
     cout << "You are now connected!" << endl;
-    cout << "To disconnect write >> end << !" << endl;
+    cout << "To disconnect write >> end << ! To send file write >> file << !" << endl;
 
     signal(SIGINT, SIG_IGN); // wylacza mozliwosc uzycia ctrl + c
 
@@ -56,4 +66,30 @@ void client::run()
 
     t1.join();
     t2.join();
+}
+
+bool client::fileReading(std::string & s)
+{
+    s.clear();
+    std::string temp;
+    cout << "Enter the file path!" << endl;
+    getline(cin, temp);
+
+    std::ifstream file(temp, std::ios_base::in);
+    if(!file.is_open())
+    {
+        cout << "You have entered the wrong path, press >> enter << to back!" << endl;
+        file.clear();
+        file.close();
+        return false;
+    }
+
+    s.clear();
+    char ch;
+    while(file.get(ch))
+        s += ch;
+
+    file.clear();
+    file.close();
+    return true;
 }

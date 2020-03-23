@@ -14,6 +14,7 @@
 #include <algorithm>
 #include <unistd.h>
 #include <thread>
+#include <fstream>
 
 class serwer
 {
@@ -22,6 +23,7 @@ class serwer
     Socket test;
     std::vector<int> arraySocket;
     std::thread t1;
+    std::ofstream file;
 
     int receive();
     void broadcast(int activeSocket, std::string text);

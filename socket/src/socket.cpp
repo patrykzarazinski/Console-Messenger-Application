@@ -104,7 +104,7 @@ int Socket::receive(std::string & s)
     return -1;
 }
 
-int Socket::operator>>(std::string & s)
+int Socket::operator>>(const std::string s)
 {
 	if(send(mySocket, s.c_str() , s.size() + 1, 0) == -1)
         return -1;

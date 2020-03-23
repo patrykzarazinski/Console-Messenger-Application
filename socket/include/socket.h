@@ -36,6 +36,6 @@ class Socket
     friend ostream & operator<<(ostream & os, const Socket & s); // wypisuje adres clienta
     int receive(std::string & s, int s_socket); // odbiera dane z dowolnego gniazda
     int receive(std::string & s); // odbiera dane
-    int operator>>(std::string & s); // wysyla dane
+    int operator>>(const std::string s); // wysyla dane
     int s_accept(); 
  };

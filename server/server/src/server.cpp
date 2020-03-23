@@ -19,7 +19,17 @@ int serwer::receive()
 
     if(test.receive(buff, tempSocket))
     {
-      if(!strcmp(buff.c_str(), "end"))
+      if(strcmp(buff.c_str(), "file") == 0)
+      {
+        buff.clear();
+        test.receive(buff,tempSocket);
+        file.open("plik.txt", std::ios_base::out);
+        file << buff.c_str();
+        file.clear();
+        file.close();
+        continue;
+      }
+      if(strcmp(buff.c_str(), "end") == 0)
       {
         broadcast(tempSocket, "User disconnected!");
         break;
