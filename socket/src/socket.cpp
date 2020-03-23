@@ -86,7 +86,7 @@ ostream & operator<<(ostream & os, const Socket & s)
 
 int Socket::receive(std::string & s, int s_socket)
 {
-	s = std::string(512, '\0');
+	s = std::string(size, '\0');
 
 	if(recv(s_socket, const_cast<char *>(s.c_str()), s.size() - 1, 0) > 0)
 		return 1;
@@ -96,7 +96,7 @@ int Socket::receive(std::string & s, int s_socket)
 
 int Socket::receive(std::string & s)
 {
-	s = std::string(512, '\0');
+	s = std::string(size, '\0');
 
 	if(recv(mySocket, const_cast<char *>(s.c_str()), s.size() - 1, 0) > 0)
         return 1;
