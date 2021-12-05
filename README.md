@@ -1,2 +1,2 @@
-# Console-Messenger-Application
-It is a client-server application that enables communication between clients.
+# Console Messenger Application
+Client-server application that enables each others communication.
